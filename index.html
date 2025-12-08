@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+     
+    />
+
+    <title>Assets Repair Report</title>
+  </head>
+  <body>
+    <header></header>
+    <main>
+      <div class="container">
+        <form id="data-form" method="post">
+          <h3>Enter Units Repaired</h3>
+
+          <div class="form">
+            <div class="input-el">
+              <input type="number" placeholder="Write RMA here..." />
+            </div>
+            <div class="input-el">
+              <select id="type">
+                <option value="Fleet">Fleet</option>
+                <option value="CSC">CSC</option>
+              </select>
+            </div>
+            <div class="input-el">
+              <select id="status">
+             
+              </select>
+            </div>
+            <div class="input-el">
+              <button class="btn form-btn" type="submit">save</button>
+            </div>
+          </div>
+          <button type="button" class="btn btn-expand">
+            <i class="fa-solid fa-angle-down"></i>
+          </button>
+        </form>
+        <form id="time-form" method="post" class="">
+          <h3>Enter Lost Time</h3>
+          <div class="form">
+            <div class="input-el">
+              <input
+                type="number"
+                step="any"
+                placeholder="Enter lost time in hours..."
+              />
+            </div>
+
+            <div class="input-el">
+              <button class="btn" type="submit">save</button>
+            </div>
+          </div>
+        </form>
+
+        <div class="table">
+          <div class="summary">
+            <div class="buttons">
+               <button class="btn" id="btn-prev-week"><i class="fa-solid fa-angle-left"></i>Prev</button>
+               <button class="btn" id="btn-next-week">Next<i class="fa-solid fa-angle-right"></i></button>
+            </div>
+            <div class="graph-filter">
+            
+              <h4>Include:</h4>
+              <div>
+                <input type="checkbox" id="pendings" checked >
+                <label for="pendings"> Pendings</label>
+              </div>
+              <div>
+                <input type="checkbox" id="quotes" checked >
+                <label for="quotes"> Quotes</label>
+               
+              </div>
+            </div>
+            <div class="daily">
+              
+            </div>
+            <div class="graph">
+              <div class="daily-percent">
+              
+              </div>
+              <div class="daily-percent">
+               
+              </div>
+              <div class="daily-percent">
+               
+              </div>
+              <div class="daily-percent">
+                
+              </div>
+              <div class="daily-percent">
+              
+              </div>
+              <div class="daily-percent">
+              
+              </div>
+              <div class="daily-percent">
+              
+              </div>
+              <div id="weekly-percent" class="daily-percent">
+              
+              </div>
+            </div>
+              <div class="weekly">
+               
+                <p><span id="repaired"></span> Units Repaired</p>
+                <p><span id="hours"></span> Lost Hours</p>
+              </div>
+            </div>
+          
+          
+           
+            <div class="scrollable-data">
+              <table id="data-table">
+                <thead>
+                  <tr>
+                   
+                    <th>Date</th>
+                    <th>RMA</th>
+                    <th>Type</th>
+                    <th>Status</th>
+                    <th>Modify</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+               </table>
+
+             </div>
+          
+          </div>
+        </div>
+      </div>
+    </main>
+
+    <footer>&copy; <italic>Developed by: Honeryar</italic></footer>
+    <!-- <script src="app.js"></script> -->
+    <script src="UI.js"></script>
+    <script src="AssetsRepairDB.js"></script>
+    <script src="app.js"></script>
+  </body>
+</html>
