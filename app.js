@@ -1,7 +1,14 @@
 // Constand data
 
 const types = ["fleet", "csc", "agility", "losttime"];
-const statuses = ["complete", "quote", "pending", "returned", "rejected"];
+const statuses = [
+  "complete",
+  "quote",
+  "pending",
+  "returned",
+  "rejected",
+  "refused",
+];
 
 const typeCredits = { csc: 1, fleet: 45 / 60, agility: 45 / 60 };
 const statusCredits = {
@@ -10,6 +17,7 @@ const statusCredits = {
   pending: 0.5,
   returned: 0,
   rejected: 0,
+  refusal: 1,
 };
 
 // shows the data for current or previous weeks
@@ -56,10 +64,10 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 chkbxPendings.addEventListener("change", (e) => {
-  getDailyPercents();
+  getStoredData();
 });
 chkbxQuotes.addEventListener("change", (e) => {
-  getDailyPercents();
+  getStoredData();
 });
 
 dataForm.addEventListener("submit", (e) => {
@@ -83,7 +91,7 @@ btnTimeSubmit.addEventListener("submit", (e) => {
   }
   const newTimeObj = { rma: +timeInp.value, type: "hours", status: "lost" };
   timeInp.value = "";
-  addRepaireToDB(newTimeObj);
+  db.addRepaire(newTimeObj);
   getStoredData();
 });
 
@@ -190,7 +198,7 @@ function handleDataClicks(e) {
 
     db.updateRepaire(updateObj);
     UI.addRepaireDataToUI(updateObj, btnUpdate.parentElement.parentElement);
-    getDailyPercents();
+    getStoredData();
   }
 }
 
@@ -217,7 +225,6 @@ function getDailyPercents(data) {
   daysOfWeek.forEach((day) => {
     dailyRepairs[day] = [];
   });
-
   if (data)
     data.forEach((repaire) => {
       const day = daysOfWeek[new Date(repaire.date).getDay()];
@@ -226,8 +233,8 @@ function getDailyPercents(data) {
       dailyRepairs[day].push(repaire);
     });
   loadWeekHours().then((week) => {
-    const { date, id, ...justWeek } = week;
-    weekSchedule = justWeek;
+    const { date, id, ...justSchedule } = week;
+    weekSchedule = justSchedule;
 
     UI.setUISummary(
       dailyRepairs,
@@ -271,6 +278,7 @@ function changeWorkHours(e) {
   if (e.target.matches(".daily-percent p")) {
     hourInp = e.target.querySelector("input");
     hourInp.disabled = false;
+    hourInp.focus();
   }
   if (e.target.matches(".daily-percent p button")) {
     const inpt = e.target.previousElementSibling;
@@ -301,7 +309,9 @@ function loadWeekHours() {
         db.getWeek(null, displayedWeek - 1).then((week2) => {
           if (week2) {
             resolve(week2);
-            db.addWeek(displayedWeek, week2);
+            const { date, id, ...justSchedule } = week;
+
+            db.addWeek(displayedWeek, justSchedule);
           } else {
             resolve(defaultSchedule);
 

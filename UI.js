@@ -10,8 +10,7 @@ const UI = (function () {
     statusCredits,
     weekSchedule,
     today,
-    changeWorkHours,
-    isCurrentWeek = true
+    changeWorkHours
   ) {
     const daysOfWeek = [
       "Monday",
@@ -145,7 +144,9 @@ const UI = (function () {
               <p>Quotes:</p><span>${repairUnits.quotedToday}</span>
               <p>Rejects:</p><span>${repairUnits.rejectedTody}</span>
 
-              <p>Lost Time:</p><span>${workeTimes.todayLostTime}</span>         
+              <p>Lost Time:</p><span>${workeTimes.todayLostTime.toFixed(
+                2
+              )}</span>         
     `;
     weeklySummary.innerHTML = `
     <h4>Week</h4>
@@ -153,15 +154,19 @@ const UI = (function () {
               <span>${repairUnits.completedWeekly}</span>
               <p>Pendings:</p><span>${repairUnits.pendingWeekly}</span>
               <p>Quotes:</p><span>${repairUnits.quotedWeekly}</span>
-              <p>Yeild:</p><span>${
-                ((repairUnits.completedWeekly - repairUnits.rejectedWeekly) *
-                  100) /
-                repairUnits.completedWeekly
-              }%</span>
+              <p>Yeild:</p><span>${calYield(
+                repairUnits.completedWeekly,
+                repairUnits.rejectedWeekly
+              )}%</span>
               <p>Lost Time:</p><span>${workeTimes.weekLostTime}</span>         
     `;
   }
 
+  // calculate the Yield
+  function calYield(repairedUnits, rejectedUnits) {
+    if (!repairedUnits || !rejectedUnits) return 100;
+    return ((repairedUnits - rejectedUnits) * 100) / repairedUnits;
+  }
   function calPercentage(timeRepaired, timeLost, timeRequired) {
     if (!timeRequired) return 0;
     const result = (((timeLost + timeRepaired) * 100) / timeRequired).toFixed(
@@ -177,16 +182,6 @@ const UI = (function () {
     let newValue;
     value >= 150 ? (newValue = 140) : (newValue = value);
     return newValue;
-  }
-
-  function setWeeksbuttons(currentWeek) {
-    const btnNextWeek = document.querySelector("#btn-next-week");
-    const btnPrevWeek = document.querySelector("#btn-prev-week");
-    if (currentWeek) {
-      btnNextWeek.style.display = "none";
-    } else {
-      btnPrevWeek.style.display = "none";
-    }
   }
 
   function edit({ date, rma, type, status, id }, parentUIElement) {

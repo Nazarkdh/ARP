@@ -252,8 +252,7 @@ const AssetsRepaireDB = (function () {
       const store = transaction.objectStore(STORE_NAME_WEEK);
       // 0 means getting date range of current week
       const { start, end } = getWeekDateRange(displayedWeek);
-      console.log(week);
-      console.trace();
+
       // adds days hours in week.week
       Object.keys(week).forEach((key) => {
         if (key !== "week") week.week += week[key];

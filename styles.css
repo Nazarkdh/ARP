@@ -417,6 +417,9 @@ tr.update td * {
   border-radius: 1rem;
 }
 
+tr td:nth-child(2) {
+  user-select: all;
+}
 select option {
   text-transform: capitalize;
 }
