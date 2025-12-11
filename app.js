@@ -17,7 +17,7 @@ const statusCredits = {
   pending: 0.5,
   returned: 0,
   rejected: 0,
-  refusal: 1,
+  refused: 1,
 };
 
 // shows the data for current or previous weeks
@@ -181,11 +181,19 @@ function handleDataClicks(e) {
     const currentTR = document.querySelector(`tr[data-id='${id}']`);
     const dateInp = document.querySelector(`tr input`);
     const rmaInp = document.querySelector("tr input[type='number']");
+    const time = Number(dateInp.getAttribute("time"));
+
+    const hours = Math.floor(time / 3600);
+    const minutes = Math.floor((time % 3600) / 60);
+    const seconds = time % 60;
     if (rmaInp.value === "") {
       alert("Please enter RMA");
       return null;
     }
-    const formatedDate = new Date(dateInp.value + "T00:00:00");
+
+    const formatedDate = new Date(
+      dateInp.value + `T${hours}:${minutes}:${seconds}`
+    );
     let updateObj = {};
 
     updateObj = {

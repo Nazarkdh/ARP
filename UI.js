@@ -157,7 +157,7 @@ const UI = (function () {
               <p>Yeild:</p><span>${calYield(
                 repairUnits.completedWeekly,
                 repairUnits.rejectedWeekly
-              )}%</span>
+              ).toFixed(1)}%</span>
               <p>Lost Time:</p><span>${workeTimes.weekLostTime}</span>         
     `;
   }
@@ -185,9 +185,14 @@ const UI = (function () {
   }
 
   function edit({ date, rma, type, status, id }, parentUIElement) {
+    console.log(date);
     const year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
+    let hours = date.getHours();
+    let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
+    let time = hours * 60 * 60 + minutes * 60 + seconds;
     day = day < 10 ? "0" + day : day;
     month = month < 10 ? "0" + month : month;
     const tr = document.createElement("tr");
@@ -197,7 +202,7 @@ const UI = (function () {
       tr.innerHTML = `
 
             
-            <td class="edit-date"><input type="date" value="${year}-${month}-${day}" style="width=5rem" /></td>
+            <td class="edit-date"><input type="date" time="${time}" value="${year}-${month}-${day}" style="width=5rem" /></td>
             <td><input type="number" value="${rma}" /></td>
             <td>
               <select>
@@ -218,7 +223,7 @@ const UI = (function () {
       tr.innerHTML = `
 
             
-            <td class="edit-date"><input type="date" value="${year}-${month}-${day}" style="width=5rem" /></td>
+            <td class="edit-date"><input type="date" time="${time} value="${year}-${month}-${day}" style="width=5rem" /></td>
             <td><input type="number" value="${rma}" /></td>
             <td>
            
