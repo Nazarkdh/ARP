@@ -158,7 +158,9 @@ const UI = (function () {
                 repairUnits.completedWeekly,
                 repairUnits.rejectedWeekly
               ).toFixed(1)}%</span>
-              <p>Lost Time:</p><span>${workeTimes.weekLostTime}</span>         
+              <p>Lost Time:</p><span>${workeTimes.weekLostTime.toFixed(
+                1
+              )}</span>         
     `;
   }
 

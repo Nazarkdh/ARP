@@ -194,8 +194,8 @@ function handleDataClicks(e) {
     const formatedDate = new Date(
       dateInp.value + `T${hours}:${minutes}:${seconds}`
     );
+    console.log(formatedDate);
     let updateObj = {};
-
     updateObj = {
       rma: +rmaInp.value,
       date: formatedDate,
@@ -267,7 +267,7 @@ async function getStoredData() {
 
   await db.getWeekRepaire(displayedWeek).then((repaires) => {
     getDailyPercents(repaires);
-    if (repaires.length < 1) {
+    if (repaires.length < 1 && displayedWeek < 0) {
       btnPrevWeek.style.visibility = "hidden";
       return;
     }
@@ -317,7 +317,7 @@ function loadWeekHours() {
         db.getWeek(null, displayedWeek - 1).then((week2) => {
           if (week2) {
             resolve(week2);
-            const { date, id, ...justSchedule } = week;
+            const { date, id, ...justSchedule } = week2;
 
             db.addWeek(displayedWeek, justSchedule);
           } else {
