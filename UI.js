@@ -187,7 +187,6 @@ const UI = (function () {
   }
 
   function edit({ date, rma, type, status, id }, parentUIElement) {
-    console.log(date);
     const year = date.getFullYear();
     let month = date.getMonth() + 1;
     let day = date.getDate();
@@ -197,9 +196,11 @@ const UI = (function () {
     let time = hours * 60 * 60 + minutes * 60 + seconds;
     day = day < 10 ? "0" + day : day;
     month = month < 10 ? "0" + month : month;
+
     const tr = document.createElement("tr");
     tr.setAttribute("data-id", id);
     tr.className = "update";
+
     if (type !== "hours")
       tr.innerHTML = `
 
@@ -225,7 +226,7 @@ const UI = (function () {
       tr.innerHTML = `
 
             
-            <td class="edit-date"><input type="date" time="${time} value="${year}-${month}-${day}" style="width=5rem" /></td>
+             <td class="edit-date"><input type="date" time="${time}" value="${year}-${month}-${day}" style="width=5rem" /></td>
             <td><input type="number" value="${rma}" /></td>
             <td>
            

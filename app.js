@@ -194,7 +194,7 @@ function handleDataClicks(e) {
     const formatedDate = new Date(
       dateInp.value + `T${hours}:${minutes}:${seconds}`
     );
-    console.log(formatedDate);
+
     let updateObj = {};
     updateObj = {
       rma: +rmaInp.value,
