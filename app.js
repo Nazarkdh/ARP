@@ -114,7 +114,7 @@ function getDataForm() {
   const rma = +rmaInpt.value;
   const type = typeInput.value;
   const status = statusInp.value;
-  if (!rma) {
+  if (!rma || +rma.value < 0) {
     alert("Please enter RMA ");
     return null;
   }
@@ -170,19 +170,22 @@ function handleDataClicks(e) {
   }
   if (btnDel) {
     id = +btnDel.dataset.id;
-    db.deleteRepaire(id);
-    btnDel.parentElement.parentElement.remove();
-    getStoredData();
+    const confirmed = confirm("Are you sure to delete this?");
+    if (confirmed) {
+      db.deleteRepaire(id);
+      btnDel.parentElement.parentElement.remove();
+      getStoredData();
+    }
   }
   if (btnUpdate) {
     id = +btnUpdate.dataset.id;
     const typeInp = document.querySelectorAll("tr select")[0];
     const statusInp = document.querySelectorAll("tr select")[1];
-    const currentTR = document.querySelector(`tr[data-id='${id}']`);
     const dateInp = document.querySelector(`tr input`);
     const rmaInp = document.querySelector("tr input[type='number']");
     const time = Number(dateInp.getAttribute("time"));
 
+    if (+rmaInp.value < 0) return;
     const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
@@ -203,6 +206,10 @@ function handleDataClicks(e) {
       status: statusInp ? statusInp.value : "lost",
       id,
     };
+    if (isNaN(updateObj.date)) {
+      console.log(updateObj.date);
+      return;
+    }
 
     db.updateRepaire(updateObj);
     UI.addRepaireDataToUI(updateObj, btnUpdate.parentElement.parentElement);
