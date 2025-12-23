@@ -253,6 +253,8 @@ const AssetsRepaireDB = (function () {
       // 0 means getting date range of current week
       const { start, end } = getWeekDateRange(displayedWeek);
 
+      // reset the sum of days hours in week.
+      week.week = 0;
       // adds days hours in week.week
       Object.keys(week).forEach((key) => {
         if (key !== "week") week.week += week[key];

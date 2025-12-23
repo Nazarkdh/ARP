@@ -194,9 +194,15 @@ function handleDataClicks(e) {
       return null;
     }
 
-    const formatedDate = new Date(
-      dateInp.value + `T${hours}:${minutes}:${seconds}`
-    );
+    // dateInp.value is always "YYYY-MM-DD" for standard HTML5 date inputs
+    const [year, month, day] = dateInp.value.split("-").map(Number);
+
+    // Note: Month is 0-indexed in JS (January is 0, December is 11)
+    const formatedDate = new Date(year, month - 1, day);
+
+    formatedDate.setHours(hours);
+    formatedDate.setMinutes(minutes);
+    formatedDate.setSeconds(seconds);
 
     let updateObj = {};
     updateObj = {
