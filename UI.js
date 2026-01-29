@@ -10,7 +10,9 @@ const UI = (function () {
     statusCredits,
     weekSchedule,
     today,
-    changeWorkHours
+    year,
+    weekOfYear,
+    changeWorkHours,
   ) {
     const daysOfWeek = [
       "Monday",
@@ -52,7 +54,7 @@ const UI = (function () {
 
       if (dailyRepaires[day]) {
         dailyRepaires[day].map((repair) => {
-          // calculate time for each repaire repect to their status i.e type: csc=1 status:quote=0.5 result: 0.5
+          // calculate time for each repaire respect to their status i.e type: csc=1 status:quote=0.5 result: 0.5
           if (repair.type !== "hours") {
             workeTimes.dayTimeOnRepaire +=
               typeCredits[repair.type] * statusCredits[repair.status];
@@ -101,12 +103,12 @@ const UI = (function () {
       const dailyPercentGained = calPercentage(
         workeTimes.dayTimeOnRepaire,
         workeTimes.dayLostTime,
-        weekSchedule[day]
+        weekSchedule[day],
       );
       const weeklyPercentGained = calPercentage(
         workeTimes.weekTimeOnRepair,
         workeTimes.weekLostTime,
-        weekSchedule.week
+        weekSchedule.week,
       );
 
       // inserts structure and days to graphs
@@ -138,6 +140,7 @@ const UI = (function () {
 
     dailySummary.innerHTML = `
     <h4>Today</h4>
+    
               <p>Repaires:</p>
               <span>${repairUnits.completedToday}</span>
               <p>Pendings:</p><span>${repairUnits.pendingToday}</span>
@@ -145,21 +148,24 @@ const UI = (function () {
               <p>Rejects:</p><span>${repairUnits.rejectedTody}</span>
 
               <p>Lost Time:</p><span>${workeTimes.todayLostTime.toFixed(
-                2
+                2,
               )}</span>         
     `;
     weeklySummary.innerHTML = `
     <h4>Week</h4>
+    <h4>${weekOfYear < 10 ? "0" + weekOfYear : weekOfYear}</h4>
+    <h4>${year}</h4>
+    
               <p>Repaires:</p>
               <span>${repairUnits.completedWeekly}</span>
               <p>Pendings:</p><span>${repairUnits.pendingWeekly}</span>
               <p>Quotes:</p><span>${repairUnits.quotedWeekly}</span>
               <p>Yeild:</p><span>${calYield(
                 repairUnits.completedWeekly,
-                repairUnits.rejectedWeekly
+                repairUnits.rejectedWeekly,
               ).toFixed(1)}%</span>
               <p>Lost Time:</p><span>${workeTimes.weekLostTime.toFixed(
-                1
+                1,
               )}</span>         
     `;
   }
@@ -172,7 +178,7 @@ const UI = (function () {
   function calPercentage(timeRepaired, timeLost, timeRequired) {
     if (!timeRequired) return 0;
     const result = (((timeLost + timeRepaired) * 100) / timeRequired).toFixed(
-      0
+      0,
     );
 
     return result;
@@ -182,7 +188,7 @@ const UI = (function () {
     if (!value) return 0;
 
     let newValue;
-    value >= 150 ? (newValue = 140) : (newValue = value);
+    value >= 135 ? (newValue = 135) : (newValue = value);
     return newValue;
   }
 
@@ -250,7 +256,7 @@ const UI = (function () {
   function updateRepairInUI(
     { rma, type, status, date, id },
     parentUIElement,
-    action
+    action,
   ) {
     date = formatDate(date);
     const tr = document.createElement("tr");

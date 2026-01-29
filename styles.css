@@ -53,7 +53,7 @@ form,
   background-color: var(--card-background-color);
   box-shadow: 0 1rem 1rem var(--var-primary-color);
   border-radius: 20px;
-  margin-bottom: 2rem;
+  margin-bottom: 2.5rem;
   padding-bottom: 1rem;
 }
 
@@ -220,14 +220,19 @@ form,
   transform: translateY(-11rem);
   visibility: hidden;
   z-index: -1;
-  transition: transform 0.5s linear, visibility 0.5s linear;
+  transition:
+    transform 0.5s linear,
+    visibility 0.5s linear;
 }
 
 #time-form.active {
+  margin-top: 3rem;
   transform: translateY(0rem);
   visibility: visible;
   z-index: 0;
-  transition: transform 0.5s linear, z-index 1s linear;
+  transition:
+    transform 0.5s linear,
+    z-index 1s linear;
 }
 
 form h3 {

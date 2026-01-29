@@ -132,7 +132,7 @@ function resetDataForm() {
 }
 
 function formatDate(date) {
-  if (!date instanceof Date) return null;
+  if ((!date) instanceof Date) return null;
   date = date.toLocaleDateString("en-GB", {
     day: "numeric",
     month: "short",
@@ -212,10 +212,6 @@ function handleDataClicks(e) {
       status: statusInp ? statusInp.value : "lost",
       id,
     };
-    if (isNaN(updateObj.date)) {
-      console.log(updateObj.date);
-      return;
-    }
 
     db.updateRepaire(updateObj);
     UI.addRepaireDataToUI(updateObj, btnUpdate.parentElement.parentElement);
@@ -256,6 +252,9 @@ function getDailyPercents(data) {
   loadWeekHours().then((week) => {
     const { date, id, ...justSchedule } = week;
     weekSchedule = justSchedule;
+    const dateObj = new Date(date);
+    const year = dateObj.getFullYear();
+    const weekOfYear = SupportFunctions.getISOWeekNumber(dateObj);
 
     UI.setUISummary(
       dailyRepairs,
@@ -263,7 +262,9 @@ function getDailyPercents(data) {
       statusCredits,
       weekSchedule,
       today,
-      changeWorkHours
+      year,
+      weekOfYear,
+      changeWorkHours,
     );
   });
 }
@@ -285,7 +286,7 @@ async function getStoredData() {
       return;
     }
     repaires = repaires.sort(
-      (obj1, obj2) => new Date(obj1.date) - new Date(obj2.date)
+      (obj1, obj2) => new Date(obj1.date) - new Date(obj2.date),
     );
     repaires.forEach((obj) => {
       UI.addRepaireDataToUI(obj);
