@@ -1,5 +1,8 @@
 // Constand data
 
+const daysTillNextPM = 180;
+const numOfDaysB4Expiring = 90;
+
 const types = ["fleet", "csc", "agility", "losttime"];
 const statuses = [
   "complete",
@@ -54,7 +57,10 @@ const dataTableBody = document.querySelector("#data-table tbody");
 
 // Database
 const db = AssetsRepaireDB;
-
+//show next PM date for the unit
+UI.setPM(daysTillNextPM);
+//shows battery expiring date
+UI.getBatteryExpiry(numOfDaysB4Expiring);
 // event listeners
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -129,16 +135,6 @@ function resetDataForm() {
   rmaInpt.value = "";
   typeInput.value = "fleet";
   statusInp.value = "complete";
-}
-
-function formatDate(date) {
-  if ((!date) instanceof Date) return null;
-  date = date.toLocaleDateString("en-GB", {
-    day: "numeric",
-    month: "short",
-    year: "2-digit",
-  });
-  return date;
 }
 
 function capitalize(str) {

@@ -140,6 +140,7 @@ const UI = (function () {
 
     dailySummary.innerHTML = `
     <h4>Today</h4>
+    <h4>${new Date().getDate()}</h4>
     
               <p>Repaires:</p>
               <span>${repairUnits.completedToday}</span>
@@ -188,7 +189,7 @@ const UI = (function () {
     if (!value) return 0;
 
     let newValue;
-    value >= 135 ? (newValue = 135) : (newValue = value);
+    value > 130 ? (newValue = 130) : (newValue = value);
     return newValue;
   }
 
@@ -258,7 +259,7 @@ const UI = (function () {
     parentUIElement,
     action,
   ) {
-    date = formatDate(date);
+    date = SupportFunctions.formatDate(date);
     const tr = document.createElement("tr");
     tr.setAttribute("data-id", id);
     tr.innerHTML = `
@@ -297,7 +298,7 @@ const UI = (function () {
   }
 
   function addRepaireDataToUI({ rma, type, status, date, id }, parent) {
-    date = formatDate(date);
+    date = SupportFunctions.formatDate(date);
     const tr = document.createElement("tr");
     tr.className = type;
     tr.innerHTML = `
@@ -342,6 +343,27 @@ const UI = (function () {
     return options;
   }
 
+  // this function calcultes the date for next PM of the device .
+  function setPM(numOfDays) {
+    const spanPM = document.querySelector("#next-PM span");
+    const nextPM = new Date();
+    nextPM.setDate(nextPM.getDate() + numOfDays);
+    console.log(nextPM);
+    spanPM.textContent = SupportFunctions.formatDate(nextPM, "numeric");
+  }
+
+  // calculates unit battery expiring date a few days earlier then it actually expires
+  function getBatteryExpiry(numOfDaysB4Expiring) {
+    const spanBatteryDate = document.querySelector("#battery-expiry span");
+    const expiringDate = new Date();
+    expiringDate.setDate(expiringDate.getDate() + numOfDaysB4Expiring);
+    spanBatteryDate.textContent = expiringDate.toLocaleDateString("en-US", {
+      year: "2-digit",
+      month: "numeric",
+      day: "numeric",
+    });
+  }
+
   return {
     setUISummary,
     edit,
@@ -349,5 +371,7 @@ const UI = (function () {
     addRepaireDataToUI,
     addOptionsToSelects,
     clearTableData,
+    setPM,
+    getBatteryExpiry,
   };
 })();

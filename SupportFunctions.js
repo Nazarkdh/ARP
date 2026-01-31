@@ -19,5 +19,17 @@ const SupportFunctions = (function () {
     return weekNo;
   }
 
-  return { getISOWeekNumber };
+  function formatDate(date, yearFormat = "2-digit") {
+    if ((!date) instanceof Date) return null;
+    let options = {
+      day: "numeric",
+      month: "short",
+      year: yearFormat,
+    };
+
+    date = date.toLocaleDateString("en-US", options);
+    return date;
+  }
+
+  return { getISOWeekNumber, formatDate };
 })();

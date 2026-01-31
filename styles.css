@@ -243,6 +243,15 @@ form h3 {
   letter-spacing: 1px;
 }
 
+form #next-PM,
+form #battery-expiry {
+  padding: 0;
+  margin: 0.5rem 0 0 3rem;
+  color: #fff;
+  text-shadow: 1px 1px 3px #000;
+  letter-spacing: 1px;
+}
+
 .form {
   display: flex;
   justify-content: space-between;
