@@ -348,7 +348,7 @@ const UI = (function () {
     const spanPM = document.querySelector("#next-PM span");
     const nextPM = new Date();
     nextPM.setDate(nextPM.getDate() + numOfDays);
-    console.log(nextPM);
+
     spanPM.textContent = SupportFunctions.formatDate(nextPM, "numeric");
   }
 
