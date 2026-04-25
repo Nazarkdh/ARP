@@ -359,8 +359,8 @@ const UI = (function () {
     expiringDate.setDate(expiringDate.getDate() + numOfDaysB4Expiring);
     spanBatteryDate.textContent = expiringDate.toLocaleDateString("en-US", {
       year: "2-digit",
-      month: "numeric",
-      day: "numeric",
+      month: "2-digit",
+      day: "2-digit",
     });
   }
 

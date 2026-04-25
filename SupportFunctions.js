@@ -22,12 +22,12 @@ const SupportFunctions = (function () {
   function formatDate(date, yearFormat = "2-digit") {
     if ((!date) instanceof Date) return null;
     let options = {
-      day: "numeric",
+      day: "2-digit",
       month: "short",
       year: yearFormat,
     };
 
-    date = date.toLocaleDateString("en-US", options);
+    date = date.toLocaleDateString("en-GB", options);
     return date;
   }
 

@@ -3,7 +3,7 @@
 const daysTillNextPM = 180;
 const numOfDaysB4Expiring = 90;
 
-const types = ["fleet", "csc", "agility", "losttime"];
+const types = ["fleet", "csc", "agility","green", "losttime"];
 const statuses = [
   "complete",
   "quote",
@@ -13,7 +13,7 @@ const statuses = [
   "refused",
 ];
 
-const typeCredits = { csc: 1, fleet: 45 / 60, agility: 45 / 60 };
+const typeCredits = { csc: 1, fleet: 48 / 60, agility: 48 / 60, green:48/60 };
 const statusCredits = {
   complete: 1,
   quote: 0.5,
