@@ -3,7 +3,7 @@
 const daysTillNextPM = 180;
 const numOfDaysB4Expiring = 90;
 
-const types = ["fleet", "csc", "agility","green", "losttime"];
+const types = ["fleet", "CST", "agility", "green", "losttime"];
 const statuses = [
   "complete",
   "quote",
@@ -13,7 +13,13 @@ const statuses = [
   "refused",
 ];
 
-const typeCredits = { csc: 1, fleet: 48 / 60, agility: 48 / 60, green:48/60 };
+const typeCredits = {
+  CST: 1,
+  cst: 1,
+  fleet: 48 / 60,
+  agility: 48 / 60,
+  green: 48 / 60,
+};
 const statusCredits = {
   complete: 1,
   quote: 0.5,
@@ -44,6 +50,8 @@ const chkbxQuotes = document.querySelector(".graph-filter #quotes ");
 const btnPrevWeek = document.getElementById("btn-prev-week");
 const btnNextWeek = document.getElementById("btn-next-week");
 
+const btnDownload = document.querySelector(".btn-download");
+
 // inputs
 
 const rmaInpt = document.querySelector('input[type="number"]');
@@ -62,6 +70,8 @@ UI.setPM(daysTillNextPM);
 //shows battery expiring date
 UI.getBatteryExpiry(numOfDaysB4Expiring);
 // event listeners
+
+btnDownload.addEventListener("click", UI.exportToExcelVanilla);
 
 document.addEventListener("DOMContentLoaded", () => {
   typeInput.innerHTML = UI.addOptionsToSelects(types, "Fleet");

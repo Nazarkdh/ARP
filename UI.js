@@ -37,7 +37,7 @@ const UI = (function () {
       pendingToday: 0,
       quotedToday: 0,
       rejectedTody: 0,
-      completedWeekly: 0,
+      completedWeekly: { CST: 0, OTH: 0 },
       pendingWeekly: 0,
       quotedWeekly: 0,
       returnedWeekly: 0,
@@ -67,7 +67,9 @@ const UI = (function () {
           }
 
           if (repair.status === "complete") {
-            repairUnits.completedWeekly++;
+            if (repair.type === "CST" || repair.type === "csc")
+              repairUnits.completedWeekly.CST++;
+            else repairUnits.completedWeekly.OTH++;
             if (day === today) {
               repairUnits.completedToday++;
             }
@@ -158,7 +160,7 @@ const UI = (function () {
     <h4>${year}</h4>
     
               <p>Repaires:</p>
-              <span>${repairUnits.completedWeekly}</span>
+              <span>${repairUnits.completedWeekly.CST}<span style="font-size:10px">CST</span> ${repairUnits.completedWeekly.OTH}<span style="font-size:10px">OTH</span></span>
               <p>Pendings:</p><span>${repairUnits.pendingWeekly}</span>
               <p>Quotes:</p><span>${repairUnits.quotedWeekly}</span>
               <p>Yeild:</p><span>${calYield(
@@ -231,8 +233,6 @@ const UI = (function () {
             </td> `;
     else
       tr.innerHTML = `
-
-            
              <td class="edit-date"><input type="date" time="${time}" value="${year}-${month}-${day}" style="width=5rem" /></td>
             <td><input type="number" value="${rma}" /></td>
             <td>
@@ -364,6 +364,42 @@ const UI = (function () {
     });
   }
 
+  function exportTableToExcel(tableID = "data-table", filename = "excel_data") {
+    console.log("done");
+    const table = document.getElementById(tableID);
+    // Create a worksheet from the HTML table
+    const ws = XLSX.utils.table_to_sheet(table);
+    // Create a new workbook and add the worksheet
+    const wb = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+    // Trigger the download
+    XLSX.writeFile(wb, `${filename}.xlsx`);
+  }
+
+  function exportToExcelVanilla(tableID = "data-table", filename = "data") {
+    const table = document.getElementById("data-table");
+    // const table = document.getElementById(tableID);
+    console.log(table);
+    // const tableHTML = table.outerHTML.replace(/ /g, "%20");
+    const tableHTML = table.outerHTML.replaceAll(" ", " ");
+    const dataType = "application/vnd.ms-excel";
+
+    // Create a download link
+    const downloadLink = document.createElement("a");
+    document.body.appendChild(downloadLink);
+
+    // Create a Blob from the table HTML
+    const blob = new Blob(["\ufeff", tableHTML], { type: dataType });
+    const url = URL.createObjectURL(blob);
+
+    downloadLink.href = url;
+    downloadLink.download = `${filename}.xls`;
+    downloadLink.click();
+
+    // Cleanup
+    document.body.removeChild(downloadLink);
+  }
+
   return {
     setUISummary,
     edit,
@@ -373,5 +409,7 @@ const UI = (function () {
     clearTableData,
     setPM,
     getBatteryExpiry,
+    exportTableToExcel,
+    exportToExcelVanilla,
   };
 })();

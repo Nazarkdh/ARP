@@ -371,7 +371,7 @@ td {
   width: 8rem;
   /* text-transform: capitalize; */
 }
-th:last-child,
+th:nth-child(5),
 td:last-child {
   display: inline-block;
   text-align: right;
@@ -411,7 +411,7 @@ tr {
 tr.fleet {
   box-shadow: 0px 0.2rem 0.2rem #fff inset;
 }
-tr.csc {
+tr.CST {
   box-shadow: 0px 0.2rem 0.2rem #ffd000 inset;
 }
 tr.agility {
@@ -449,7 +449,8 @@ select option {
   transform: translateX(-50%);
 }
 
-.buttons button {
+.buttons button,
+.btn-download {
   background-color: transparent;
   border: none;
   font-size: 1.5rem;
@@ -457,6 +458,12 @@ select option {
   text-shadow: 1px 1px 3px #000;
   letter-spacing: 1px;
   cursor: pointer;
+}
+
+.btn-download {
+  margin-left: 1rem;
+  font-size: 2rem;
+  color: #df1a1a;
 }
 .buttons i {
   margin: 0 0.5rem;
